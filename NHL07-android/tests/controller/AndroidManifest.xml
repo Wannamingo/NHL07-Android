@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.nhl07.port.test">
+    <application android:label="NHL07 controller test" android:debuggable="true" />
+    <instrumentation android:name="org.nhl07.test.ControllerRun" android:targetPackage="org.nhl07.port" android:functionalTest="true" />
+</manifest>

@@ -1,0 +1,4 @@
+<resources>
+    <color name="icon_background">#000000</color>
+    <item type="mipmap" name="ic_launcher">@drawable/game_icon</item>
+</resources>

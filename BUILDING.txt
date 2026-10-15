@@ -1,0 +1,132 @@
+NHL 07 Android 0.4.3 - public source/build information
+==================================================
+
+Scope
+-----
+The source archive and repository contain the Android ARM64 port, generated
+game C, the modified xboxrecomp backend, DSP/ADPCM sources, shader compiler
+sources, Java launcher and build/preparation tools. The sibling directory
+layout NHL07-android/ and NHL07-x64/ is required by CMake.
+
+No original ISO, XBE, VIV archives, music, video, roster database, game fonts,
+release artwork, Android toolchain, signing key, private configuration,
+personal device log or saved game is included. Generated game routines and
+game-derived translation strings remain subject to the original title's
+rights; this bundle does not grant an open-source license to EA's game.
+See THIRD-PARTY-NOTICES.txt and licenses/ for the independently licensed code.
+
+Reference release
+-----------------
+Version 0.4.3, versionCode 27, org.nhl07.port, arm64-v8a, Android API 29+.
+System OpenGL ES 3; custom ANGLE/Turnip/Adreno drivers are not part of this
+release. NDK r30 (30.0.16248370), Java 21, Android platform/build tools 35,
+CMake 3.22.1 or newer, Ninja and Python 3.10+ were used or are required.
+Install Pillow and fonttools separately to regenerate Russian font assets:
+
+    python -m pip install pillow fonttools
+
+The public source snapshot is pinned to the release's native source. A full
+clean rebuild of this publication bundle has not been performed. Rebuilding
+with different compiler versions, donor fonts, assets, signing keys or paths
+can produce different bytes; no bit-reproducible APK claim is made.
+
+1. Build the shader libraries from the included sources
+-----------------------------------------------------
+From the extracted archive/repository root:
+
+    python scripts/build_shader_libraries.py --ndk PATH_TO_NDK --cmake cmake --ninja ninja
+
+This builds glslang, glslang-default-resource-limits, SPIRV,
+spirv-cross-core and spirv-cross-glsl for ARM64 Android and places their five
+archives in NHL07-android/deps/shader-libs/. No network fetch is performed.
+Optional SPIRV-Tools optimization and upstream tests are disabled; HLSL input
+and GLSL output remain enabled. The original locally imported archive hashes
+are recorded in provenance.json; rebuilding them is not promised byte-exact.
+
+2. Build the native core
+-----------------------
+Configure NHL07-android with the NDK CMake toolchain, then build nhl07_core
+and nhl07_probe. Example arguments (adapt paths/quoting to your shell):
+
+    cmake -S NHL07-android -B NHL07-android/build -G Ninja -DCMAKE_TOOLCHAIN_FILE=PATH_TO_NDK/build/cmake/android.toolchain.cmake -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-29 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DNHL07_CUSTOM_GRAPHICS=OFF
+    cmake --build NHL07-android/build --target nhl07_core nhl07_probe --parallel 2
+
+Use the included generated C. Regenerating it is a separate research workflow
+and requires additional analysis inputs; simply rerunning analyze.py is not
+a replacement for this pinned source snapshot.
+
+3. Supply the user's original game and regenerate Russian resources
+------------------------------------------------------------------
+Use your own NHL 07 USA original-Xbox disc image. The supported default.xbe
+SHA256 is:
+
+    438eaeada465b3b560a7578436504274525e904534a62753ea1e16be87ed6c83
+
+For PC preparation, the included xboxrecomp extractor can unpack your image:
+
+    cd NHL07-x64/vendor/xboxrecomp
+    python -m tools.xiso unpack PATH_TO_YOUR_ISO -o PATH_TO_EXTRACTED_DISC
+
+Return to the repository root. The helper below copies only the resource
+inputs required for regeneration into your local NHL07-x64/disc/ directory;
+it does not change your extracted originals. It reads the original locale
+tables, reconstructs their index JSON, applies the included Russian draft and
+reviewed overrides, and extends each original font copy using donor glyphs:
+
+    python scripts/prepare_russian_assets.py --disc PATH_TO_EXTRACTED_DISC --smallcaps-font PATH_TO_ITALIC_BOLD_TTF --regular-font PATH_TO_REGULAR_NARROW_TTF
+
+The release used locally installed Windows Arial Bold Italic and Arial Narrow
+as glyph donors. Those font files are not distributed here. Supply fonts you
+are entitled to use; another donor changes metrics and the resulting hashes.
+The helper uses the port's bounded RefPack algorithm, so the private Windows
+decoder-validation DLL and translation-model runtime are not required.
+The already prepared translation draft is included as a patch input; an MT
+model is unnecessary. The resulting assets retain their original rights.
+
+4. Restore launcher artwork and package locally
+-----------------------------------------------
+The source bundle omits the commercial release artwork. To reuse the artwork
+already present in your downloaded release APK, add this optional argument
+when running the resource helper:
+
+    --artwork-apk PATH_TO_NHL07_ANDROID_0.4.3_APK
+
+Alternatively provide --icon PATH_TO_PNG and --background PATH_TO_JPEG.
+These options copy the files without relicensing them. Packaging needs
+NHL07-android/android/res/drawable-nodpi/game_icon.png and
+NHL07-android/android/assets/launcher/background.jpg.
+
+For the existing Windows packaging tools, create your own local-only
+NHL07-android/local-toolchains.json containing absolute paths for ndk, java
+(JDK root), build_tools (SDK build-tools directory), android_jar, cmake,
+ninja, adb, adb_port and reference (the sibling NHL07-x64 directory).
+Do not commit this file. Create NHL07-android/logs/ and analysis/, then run:
+
+    python NHL07-android/tools/build.py
+    python NHL07-android/tools/package.py
+
+build.py records the actual core hash in analysis/build.json; package.py
+checks it, compiles Java/resources, embeds the native core, signs a new local
+development APK and checks its signature and 16 KiB alignment. The scripts
+currently expect Windows .exe tool names. The key is generated locally and
+is not the release signing key; Android may require uninstalling the old
+package before installing a differently signed local build. Back up saves.
+No ISO/XBE/VIV is embedded by packaging. At runtime use the launcher's ISO
+import from your own copy; the current application extracts/imports files.
+
+Validation tools
+----------------
+Source-level contracts are included under tests/ and tools/. Some historical
+research scripts require private disc-derived fixtures or analysis files
+that are intentionally absent. They are not a self-contained test suite.
+The Russian asset preparation helper supports --self-test without a device.
+See provenance.json for file hashes, source omissions and local modifications.
+
+License scope
+-------------
+Preserve all upstream notices and satisfy the applicable licenses when
+redistributing modifications. DSP56300 contains GPL-2.0-or-later code and is
+compiled into the native core; source availability is required by its terms.
+Publishing this bundle is not a blanket license grant, a legal clearance of
+the commercial title, or an assertion that every original-game component is
+open source. No license for EA artwork, music, fonts or game data is granted.

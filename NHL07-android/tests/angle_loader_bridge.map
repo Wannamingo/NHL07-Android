@@ -1,0 +1,9 @@
+LIBC {
+  global:
+    nhldlo;
+    nhldlcx;
+    nhl07_angle_bridge_configure;
+    nhl07_angle_bridge_get_stats;
+    nhl07_angle_bridge_release;
+  local: *;
+};

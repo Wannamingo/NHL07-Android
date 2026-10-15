@@ -1,0 +1,43 @@
+NHL 07 Android 0.4.3 — установка / Installation
+
+Требования: Android 10+, ARM64, OpenGL ES 3.0. Проверено прежде всего на RG477M (Mali).
+
+1. Скачайте NHL07-Android-0.4.3.apk из Releases и установите.
+2. Откройте лаунчер и выберите Select ISO / Выбрать ISO.
+3. Укажите собственный образ NHL 07 (USA) для оригинального Xbox.
+   Версии Xbox 360 и PS2 для импорта не подходят.
+4. Дождитесь импорта. Игра затем использует извлечённые файлы,
+   а не читает ISO напрямую при каждом запуске.
+5. Нажмите PLAY / ИГРАТЬ.
+
+Обновление APK: устанавливайте поверх предыдущей версии, без удаления
+приложения и очистки его хранилища. Это сохраняет импортированные данные
+и сохранения. Сборка использует тот же сертификат, что предыдущие кандидаты.
+
+Настройки: пропорции изображения, внутреннее разрешение, сенсорное управление,
+назначение кнопок, перестановка A/B и X/Y, языки лаунчера и текста игры.
+Изменение языка игры применяется при новом запуске. Озвучка английская.
+
+Составы: завершите игру и откройте Настройки → Составы команд → Управление.
+Выберите поддерживаемый ZIP с ROSTER NHL Legacy для Xbox 360.
+Лаунчер проверяет и преобразует данные в формат NHL 07. Можно отключить
+обновление или восстановить предыдущую версию. Произвольный файл сохранения
+другой игры или неподдерживаемый контейнер не является совместимым обновлением.
+Исходный ISO не перезаписывается. Все сезонные сценарии для обновлённых
+составов пока не проверены.
+
+RG477M использует системный драйвер GLES Mali. Устанавливать Turnip не нужно.
+Ограничение 60 FPS — максимальная частота, а не гарантия достижения 60 FPS.
+
+English
+
+Install the release APK, open Select ISO and choose your own original Xbox
+NHL 07 (USA) image. Wait for the first import and press PLAY. Xbox 360/PS2
+images cannot replace this original Xbox input. Update by installing over
+the existing package, keeping its storage and saves.
+
+Use Settings for image proportions, resolution, touch/controller layouts,
+button swapping and separate launcher/game-text languages. Restart the game
+after changing game text. Commentary remains English. Close the game before
+importing a supported NHL Legacy ROSTER ZIP through the roster manager;
+the manager converts it and can restore the previous overlay.

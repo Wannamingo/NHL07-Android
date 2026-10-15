@@ -1,0 +1,52 @@
+# Local builds, SDKs and compiled output
+build/
+toolchains/
+local-toolchains.json
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.exe
+*.apk
+
+# User-owned disc content and saves
+disc/
+input/
+saves/
+*.iso
+*.xbe
+*.viv
+*.big
+*.xfn
+*.bin
+*.ttf
+*.otf
+
+# Locally regenerated resource/artwork assets
+NHL07-android/android/assets/localization/ru/*
+NHL07-android/android/assets/launcher/background.jpg
+NHL07-android/android/res/drawable-nodpi/game_icon.png
+NHL07-x64/mods/localization/ru/
+
+# Local diagnostics and signing material
+logs/
+checkpoints/
+keystores/
+*.jks
+*.keystore
+*.pem
+*.key
+NHL07-android/analysis/
+NHL07-x64/analysis/*
+!NHL07-x64/analysis/localization/
+NHL07-x64/analysis/localization/*
+!NHL07-x64/analysis/localization/russian-mt-draft.json
+
+# Interpreter/editor caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.idea/
+.vs/

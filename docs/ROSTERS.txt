@@ -1,0 +1,101 @@
+Обновление составов NHL 07 Android / Roster updates
+
+В лаунчере есть встроенный конвертер: он читает поддерживаемые составы
+NHL Legacy для Xbox 360 и создаёт отдельное обновление базы NHL 07.
+Пересобирать APK и повторно импортировать ISO для каждого обновления не нужно.
+Скачивание составов выполняется вручную; лаунчер не проверяет сайты и
+не загружает новые составы автоматически.
+
+Как обновлять
+1. Получите совместимый ZIP с составом. Проверенный пример:
+   ROSTER 20261007011552.zip — Legacy EDGE 2026–27 V5.
+2. Скопируйте ZIP на Android, например в папку Download.
+3. Завершите текущую игру и вернитесь в лаунчер. Обновление во время
+   работающей игры блокируется, чтобы игра не читала меняющуюся базу.
+4. Откройте Настройки → Составы команд → Управление.
+   В английском интерфейсе: Settings → Team rosters → Manage.
+5. Нажмите «Обновить состав из ZIP» / «Update roster from ZIP» и выберите файл.
+6. Дождитесь проверки и преобразования. После успешного импорта обновление
+   включается автоматически. В окне управления отображаются его название
+   и дата, если они есть в пакете или распознаны из имени.
+7. Запустите игру заново и создайте новый матч.
+
+При следующем обновлении повторите эти же шаги с новым ZIP.
+Для первичного преобразования нужны уже импортированные данные NHL 07 (USA)
+для оригинального Xbox. Исходный ISO и оригинальная извлечённая база
+не перезаписываются: обновление хранится отдельным наложением.
+
+Включение, отключение и откат
+«Включить обновление» / «Enable update» — применить сохранённое обновление.
+«Исходные составы» / «Original rosters» — играть с базой исходного NHL 07,
+не удаляя установленное обновление.
+«Вернуть предыдущий состав» / «Restore previous roster» — вернуть предыдущую
+успешно установленную версию. Кнопка доступна при наличии предыдущей версии.
+Изменения применяются при следующем запуске игры и создании нового матча.
+Сохранённый сезон или династия могут использовать собственную копию составов;
+импорт нового ZIP не является обновлением уже начатого сезона.
+
+Какие файлы подходят
+Поддерживается распознанная структура NHL Legacy EDGE с 32 клубами,
+совместимыми таблицами игроков и звеньев. Расширения ZIP недостаточно:
+содержимое проверяется перед преобразованием.
+
+Простой пакет должен содержать один извлечённый файл состава в корне ZIP,
+например файл с именем «ROSTER 20261007011552». Его содержимое начинается
+с сигнатуры RosterFile. Дополнительно разрешён roster.properties с описанием
+формата, имени файла и его SHA256. Папки внутри ZIP и несколько разных составов
+в одном архиве не поддерживаются.
+
+Не подходят:
+- образ игры для Xbox 360 вместо состава;
+- сохранение другой части NHL или неподдерживаемой структуры Legacy;
+- нераспакованный системный контейнер Xbox 360 CON/LIVE/PIRS вместо
+  извлечённого RosterFile;
+- ZIP с вложенной папкой, несколькими составами либо повреждёнными данными.
+
+Также поддерживаются специально подготовленные пакеты NHL07-ROSTER-1:
+описание должно соответствовать версии NHL 07 (USA), а преобразованная база
+содержать требуемые ресурсы. Это формат для авторов пакетов, а не любой db.viv.
+Максимальный размер ZIP — 12 МиБ, файла состава — 8 МиБ.
+Неподдерживаемые команды, таблицы, страны, дублирующиеся идентификаторы и
+некорректные звенья могут приводить к отказу импорта. Сообщение лаунчера
+показывает причину; переименование файла или расширения её не исправит.
+
+Что переносится
+Составы и распределение по командам, имена, номера, позиции, доступные
+биографические данные, поддерживаемые характеристики полевых игроков
+и вратарей, звенья и специальные сочетания. Рейтинги переводятся в шкалу
+NHL 07; это не побайтная копия базы NHL Legacy и не перенос её игрового движка.
+Для совместимого EDGE-пакета конвертер также задаёт имена Vegas Golden Knights,
+Seattle Kraken и Utah Mammoth в соответствующих слотах базы.
+
+Что остаётся из NHL 07
+Формы, логотипы, арены, модели/лица, звук, озвучка и механика игры не становятся
+ресурсами NHL Legacy от импорта составов. Новые фамилии не добавляют новые
+аудиозаписи комментаторов. Полный сезон/расписание династии с 32 клубами и все
+сценарии загрузки старых сохранений пока не проверены.
+
+English
+
+Close the running game, then open Settings → Team rosters → Manage →
+Update roster from ZIP. Select a compatible NHL Legacy EDGE Xbox 360 roster
+ZIP and wait for local validation/conversion. The update is enabled after a
+successful import. Restart the game and create a new match. Repeat with a
+new ZIP whenever you want another roster; no APK rebuild or ISO reimport is
+needed. Downloads are manual, not an automatic online updater.
+
+A simple ZIP needs one extracted RosterFile at its root, with an optional
+roster.properties manifest. A raw Xbox 360 CON/LIVE/PIRS save container,
+another NHL game's save, nested folders or multiple rosters do not qualify.
+The implemented converter expects the supported 32-team Legacy EDGE layout;
+not every Xbox 360 roster is compatible. ZIP limit: 12 MiB; payload: 8 MiB.
+
+Enable update / Original rosters switches between the installed overlay and
+the original NHL 07 database. Restore previous roster returns the previous
+installed version. Original disc data is kept intact. Existing season saves
+can carry their own roster and are not automatically migrated.
+
+Player/team assignments, supported biographical fields, translated ratings
+and line combinations are converted. Jerseys, logos, arenas, faces, commentary
+and gameplay remain from NHL 07. Whole seasons/dynasty schedules and all
+save-load scenarios with 32 clubs have not been comprehensively verified.

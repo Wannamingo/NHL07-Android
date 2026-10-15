@@ -1,0 +1,124 @@
+NHL 07 Android 0.4.3 - third-party notices
+=======================================
+
+This notice describes the system-GLES release and its public source bundle.
+It preserves component licenses; it does not relicense the commercial game.
+Copyright statements in individual source files remain authoritative.
+Full texts are supplied in licenses/ and in the corresponding source tree.
+
+1. xboxrecomp runtime and translation toolkit
+-------------------------------------------
+Copyright (c) 2026 sp00nz and credited contributors. MIT License.
+Local backend baseline: 74649ef5b0f023e7b878043bc6de2534c55e717e.
+The local source pin names https://github.com/NoRain211/xboxrecomp as its
+origin; the project's own notices credit sp00nz. Local generic and NHL-specific
+changes are present. See licenses/xboxrecomp-MIT.txt, xboxrecomp-NOTICE.txt and
+the source README/CONTRIBUTORS. The included NOTICE identifies additional
+xemu-derived files with their independent LGPL terms.
+
+The Android binary links the kernel/POSIX compatibility portion and uses the
+runtime headers. Additional backend modules included as source are not all
+linked into this system-GLES binary.
+
+2. DSP56300 interpreter (xemu / Hatari / ARAnyM)
+---------------------------------------------
+Copyright (c) 2015 espes; 2020-2025 Matt Borgerson.
+Derived from ARAnyM developer-team work (2003-2008) and Hatari adaptation by
+Thomas Huth (2008); retain the exact per-file notices.
+GPL version 2 or, at the recipient's option, any later version.
+Pinned xemu source: 36334d95b86f9c3c6ae34efb9af06785273f8e1a.
+https://github.com/xemu-project/xemu
+
+The interpreter is compiled directly into native_dsp.c and is a linked
+component, not merely a reference. Complete locally used interpreter source,
+compatibility headers and build/preparation sources are in the source bundle.
+Local changes: standalone headers and tracing shims; DMA include flattening;
+an exact unsigned 64-bit multiplication replacing four 12-bit partial products.
+The source retains the original fixed-point masks, sign handling and result
+width. See licenses/GPL-2.0.txt and provenance.json.
+
+3. MCPX DSP DMA and NV2A register definitions
+-------------------------------------------
+Copyright (c) 2015 espes; 2020-2021 Matt Borgerson (DSP DMA).
+Copyright (c) 2012 espes; 2015 Jannik Vogel (NV2A definitions).
+Their headers specify GNU Lesser General Public License version 2 or later.
+The supplied LGPL-2.1 text is a permitted later version. Other xemu APU files
+in the backend source retain the separate LGPL notices listed by xboxrecomp.
+The native DSP includes the DMA implementation, and the renderer uses the
+register definitions. See licenses/LGPL-2.1.txt and original file headers.
+
+4. ADPCM-XQ decoder
+-------------------
+Copyright (c) David Bryant / Conifer Software. BSD 3-Clause terms in adpcm.h.
+https://github.com/dbry/adpcm-xq
+The local header was obtained through the pinned xemu revision above.
+The adapter decodes the original block and consumes the first 64 Xbox frames.
+See licenses/adpcm-xq-BSD-3-Clause.txt and the bundled complete adpcm.h.
+
+5. glslang and its included shader definitions
+---------------------------------------------
+https://github.com/KhronosGroup/glslang
+Used static libraries: glslang, glslang-default-resource-limits and SPIRV.
+Copyright holders include The Khronos Group, 3Dlabs, LunarG, Google, NVIDIA,
+Arm and other authors identified in the individual files.
+Licenses are file-specific: BSD 2-Clause, BSD 3-Clause, MIT, the NVIDIA
+preprocessor permission notice, Apache-2.0 for some auxiliary sources, and
+the Bison parser skeleton's GPL-3.0-or-later WITH Bison-exception-2.2.
+The Bison exception is retained; this is not an unqualified GPL-3-only parser.
+
+All license texts and REUSE metadata from the local source are retained.
+The exact imported upstream commit was not retained in the local shader
+source provenance, so no guessed commit is claimed. The complete included
+source/file hashes are the authoritative snapshot identifiers. No optional
+SPIRV-Tools optimizer or GoogleTest library is linked by this native target.
+See licenses/glslang-LICENSE.txt, glslang-LICENSES/ and the per-file notices.
+
+6. SPIRV-Cross
+--------------
+https://github.com/KhronosGroup/SPIRV-Cross
+Used static libraries: spirv-cross-core and spirv-cross-glsl.
+Copyright 2015-2021 Arm Limited and contributors, as stated by each file.
+The library sources offer Apache-2.0 OR MIT; the MIT alternative is selected
+for those dual-licensed linked sources in this bundle. Both texts are retained.
+SPIR-V specification headers retain the Khronos free-use notice. Some source
+test/reference materials carry Apache-2.0 or CC-BY-4.0 independently.
+See licenses/spirv-cross-LICENSE.txt, spirv-cross-LICENSES/ and source headers.
+The exact upstream commit of this locally imported snapshot was not retained;
+the bundled source hashes identify it without borrowing ANGLE's unrelated pin.
+
+7. Android NDK/LLVM runtime and Android system libraries
+------------------------------------------------------
+Built with Android NDK r30 (30.0.16248370). The native link uses
+-static-libstdc++, so LLVM libc++/libc++abi and toolchain support notices are
+included from the installed NDK's verbatim NOTICE / NOTICE.toolchain files.
+These contain the applicable LLVM/Apache exception and other runtime terms;
+they also include broader toolchain notices for completeness. Toolchain
+executables and runtime installations are not bundled in the source archive.
+
+The application dynamically uses device-provided libc, libm, liblog, libdl,
+libEGL, libGLESv3, libandroid and libaaudio. These system libraries are not
+copied into the APK or the source bundle. See licenses/Android-NDK-NOTICE.txt
+and Android-NDK-NOTICE.toolchain.txt.
+
+8. Components absent from this release
+-------------------------------------
+ANGLE, Turnip/Mesa, AdrenoTools, their custom-driver binaries and SDL are not
+linked or packaged in the system-GLES release. Historical optional backend
+source may remain in the code snapshot but is disabled by
+NHL07_CUSTOM_GRAPHICS=OFF; its separate prebuilt dependencies are not included.
+Development-only Python/Pillow/fonttools/CMake/Java/NDK installations are not
+redistributed. Install them separately under their own license terms.
+
+9. Commercial title and asset scope
+----------------------------------
+NHL 07, the original executable and game resources remain the property of
+their respective rights holders. Team/league marks and EA artwork are not
+covered by the above open-source licenses. Generated/recovered game routines
+and translation patch strings are identified separately in provenance.json;
+no blanket MIT/GPL permission for EA's work is granted by this document.
+Original ISO/XBE/VIV archives and game-derived font/locale binaries are omitted
+from the public source bundle and must be regenerated from the user's copy.
+The separately distributed APK contains derived localization resources and
+launcher artwork; their inclusion does not make them open-source assets.
+
+No warranty is provided. This is an unofficial port and not an EA product.
